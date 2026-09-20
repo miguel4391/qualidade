@@ -1,0 +1,227 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+	<div class="row">
+		<div class="col-md-12">
+			<p class="h2 text-red"><% if (fuc[0]) {%>  
+										FUC - <%= fuc[0].nomeCE %>
+									<% } %> </p>
+			<p class="h2 text-red"><%= fuc[0].anoLetivoFuc %></p>
+		</div>
+		<div class="row my-3">
+			<div class="col-3 offset-10"><a href="/multPdf/<%= fuc[0].curso_sigla %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>"class="btn btn-outline-danger" target="_blank">Exportar para PDF <i class="fa-solid fa-file-pdf"></i></a></div>
+		</div>
+	</div>
+    <div class="row mt-5">
+		<div class="col-md-4 col-xs-8">
+			<p class="h6 text-red"><b>1º Semestre</b></p>	
+        	<table class="table table-striped" name="fileTable" id="fileTable">
+          		<thead>
+            		<tr class="text-red">
+              			<td scope="col">Unidade Curricular</td>
+            		</tr>
+          		</thead>
+          		<tbody>
+                	<% fuc.forEach(function(file){ %>
+                    	<% if(file.ano === '1º' && file.semestre === '1º'){ %>
+							<tr>
+                        		<td><a href="/fuc/<%= fuc[0].nomeCE %>/<%= file.nomeUCPt %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank"><%= file.nomeUCPt %></a></td>
+                    		</tr>
+						<% } %>
+                	<% }) %> 
+          		</tbody>
+        	</table>
+    	</div>
+    	<div class="col-md-4 col-xs-8">
+			<p class="h6 text-red"><b>2º Semestre </b></p>	
+        	<table class="table table-striped" name="fileTable" id="fileTable">
+          		<thead>
+            		<tr class="text-red">
+              			<td scope="col">Unidade Curricular</td>
+            		</tr>
+          		</thead>
+          		<tbody>
+                	<% fuc.forEach(function(file){ %>
+                    	<% if(file.ano === '1º' && file.semestre == '2º'){ %>
+							<tr>
+                        		<td><a href="/fuc/<%= fuc[0].nomeCE %>/<%= file.nomeUCPt %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank"><%= file.nomeUCPt %></a></td>
+                    		</tr>
+						<% } %>
+                	<% }) %> 
+          		</tbody>
+        	</table>
+    	</div>
+	</div>
+	<% if(sem >= 3){ %>
+    <div class="row mt-3">
+		<div class="col-md-4 col-xs-8">
+			<p class="h6 text-red"><b>3º Semestre</b></p>	
+        	<table class="table table-striped" name="fileTable" id="fileTable">
+          		<thead>
+            		<tr class="text-red">
+              			<td scope="col">Unidade Curricular</td>
+            		</tr>
+          		</thead>
+          		<tbody>
+                	<% fuc.forEach(function(file){ %>
+                    	<% if(file.ano === '2º' && file.semestre === '1º'){ %>
+							<tr>
+                        		<td><a href="/fuc/<%= fuc[0].nomeCE %>/<%= file.nomeUCPt %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank"><%= file.nomeUCPt %></a></td>
+                    		</tr>
+						<% } %>
+                	<% }) %> 
+          		</tbody>
+        	</table>
+    	</div>
+		<% switch(curso) {
+			case 'D-EME': %>
+			<% break;
+			case 'D-IEA': %>
+			<%break;
+			default: %>
+				<% if(sem >= 4){ %>
+    			<div class="col-md-4 col-xs-8">
+					<p class="h6 text-red"><b>4º Semestre</b></p>	
+        			<table class="table table-striped" name="fileTable" id="fileTable">
+          				<thead>
+            				<tr class="text-red">
+              					<td scope="col">Unidade Curricular</td>
+            				</tr>
+          				</thead>
+          				<tbody>
+                			<% fuc.forEach(function(file){ %>
+                    			<% if(file.ano === '2º' && file.semestre == '2º'){ %>
+									<tr>
+                        				<td><a href="/fuc/<%= fuc[0].nomeCE %>/<%= file.nomeUCPt %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank"><%= file.nomeUCPt %></a></td>
+                    				</tr>
+								<% } %>
+                			<% }) %> 
+          				</tbody>
+        			</table>
+    			</div>
+			<% } %>
+		<% } %>
+	</div>
+	<% } %>
+	<% switch(curso) {
+		case 'D-EME': %>
+				<table class="table table-striped">
+          			<thead>
+            			<tr class="text-red">
+              				<td scope="col">Unidade Curricular Final</td>
+           				</tr>
+        			</thead>
+					<tbody>
+						<tr><td><a href="/fuc/D-Engenharia de Materiais Estruturais/Tese em Engenharia de Materiais Estruturais/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank">Tese em Engenharia de Materiais Estruturais </a></td></tr>
+					</tbody>
+				</table>				
+			<% break;
+
+		case 'D-IEA': %>
+				<table class="table table-striped">
+          			<thead>
+            			<tr class="text-red">
+              				<td scope="col">Unidade Curricular Final</td>
+           				</tr>
+        			</thead>
+					<tbody>
+						<tr><td><a href="/fuc/D-Integridade Estrutural de Aeronaves/Tese em Integridade Estrutural de Aeronaves/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank">Tese em Integridade Estrutural de Aeronaves </a></td></tr>
+					</tbody>
+				</table>				
+
+			<% break;
+		default :%>
+	
+	<% if(sem >= 5){ %>
+    	<div class="row mt-3">
+			<div class="col-md-4 col-xs-8">
+				<p class="h6 text-red"><b>5º Semestre</b></p>	
+        		<table class="table table-striped" name="fileTable" id="fileTable">
+          			<thead>
+            			<tr class="text-red">
+              				<td scope="col">Unidade Curricular</td>
+            			</tr>
+          			</thead>
+          			<tbody>
+                		<% fuc.forEach(function(file){ %>
+                    		<% if(file.ano === '3º' && file.semestre === '1º'){ %>
+								<tr>
+                        			<td><a href="/fuc/<%= fuc[0].nomeCE %>/<%= file.nomeUCPt %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank"><%= file.nomeUCPt %></a></td>
+                    			</tr>
+							<% } %>
+                		<% }) %> 
+          			</tbody>
+        		</table>
+    		</div>
+    		<div class="col-md-4 col-xs-8">
+				<p class="h6 text-red"><b>6º Semestre</b></p>	
+        		<table class="table table-striped" name="fileTable" id="fileTable">
+          			<thead>
+            			<tr class="text-red">
+              				<td scope="col">Unidade Curricular</td>
+            			</tr>
+          			</thead>
+          			<tbody>
+                		<% fuc.forEach(function(file){ %>
+                    		<% if(file.ano === '3º' && file.semestre == '2º'){ %>
+								<tr>
+                        			<td><a href="/fuc/<%= fuc[0].nomeCE %>/<%= file.nomeUCPt %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank"><%= file.nomeUCPt %></a></td>
+                    			</tr>
+							<% } %>
+                		<% }) %> 
+          			</tbody>
+        		</table>
+    		</div>
+		</div>
+		<% } %>
+	<% } %>
+		<% if(sem >= 7){ %>
+    		<div class="row mt-5">
+				<div class="col-md-4 col-xs-8">
+					<p class="h6 text-red"><b>7º Semestre</b></p>	
+        			<table class="table table-striped" name="fileTable" id="fileTable">
+          				<thead>
+            				<tr class="text-red">
+              					<td scope="col">Unidade Curricular</td>
+            				</tr>
+          				</thead>
+          				<tbody>
+                			<% fuc.forEach(function(file){ %>
+                    			<% if(file.ano === '4º' && file.semestre === '1º'){ %>
+									<tr>
+                        				<td><a href="/fuc/<%= fuc[0].nomeCE %>/<%= file.nomeUCPt %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank"><%= file.nomeUCPt %></a></td>
+                    				</tr>
+								<% } %>
+                			<% }) %> 
+          				</tbody>
+        			</table>
+    			</div>
+    			<div class="col-md-4 col-xs-8">
+					<p class="h6 text-red"><b>8º Semestre</b></p>	
+        			<table class="table table-striped" name="fileTable" id="fileTable">
+          				<thead>
+            				<tr class="text-red">
+              					<td scope="col">Unidade Curricular</td>
+            				</tr>
+          				</thead>
+          				<tbody>
+                			<% fuc.forEach(function(file){ %>
+                    			<% if(file.ano === '4º' && file.semestre == '2º'){ %>
+									<tr>
+                        				<td><a href="/fuc/<%= fuc[0].nomeCE %>/<%= file.nomeUCPt %>/<%= fuc[0].anoLetivoFuc.replace('/', '_') %>" target="_blank"><%= file.nomeUCPt %></a></td>
+                    				</tr>
+								<% } %>
+                			<% }) %> 
+          				</tbody>
+        			</table>
+    			</div>
+			</div>
+		<% } %>
+    <div class="row my-3">
+      <a href="/anoFuc" class="btn btn-outline-primary"><i class="fas fa-angle-double-left"></i></a>
+    </div>
+</div>
+
+<script src="javascript/searchfilter.js" type="text/javascript"></script>
+
+<%- include('partials/footer') %>
