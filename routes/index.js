@@ -318,21 +318,25 @@ function renderFichaDoc(req, res) {
 																		if(err){
 																			console.log(err);
 																		}else{
-																			try{
-																				let auth = false;
-																				ficha.forEach(f => {
-																					if(f.vinculoIes === "A" && f.ativo === 1){
-																						auth = true;
-																					}
-																				});
-																				if(!auth){
-																					console.log("teste")
-																					res.render("docenteInvalido");
-																				}else{
-																					res.render("fichadocente", {user:user, tipoDocente:tipoDocente, catDocente:catDocente, grauDocente:grauDocente, areaDoc:areaDoc, ficha:ficha, forma:forma, pedag:pedag, invest:invest,orgGest:orgGest})
-																				}
-																			}catch{
+																			if(ficha.length === 0){
 																				res.render("docenteInvalido");
+																			}else{
+																				try{
+																					let auth = false;
+																					ficha.forEach(f => {
+																						if(f.vinculoIes === "A" && f.ativo === 1){
+																							auth = true;
+																						}
+																					});
+																					if(!auth){
+																						console.log("teste")
+																						res.render("docenteInvalido");
+																					}else{
+																						res.render("fichadocente", {user:user, tipoDocente:tipoDocente, catDocente:catDocente, grauDocente:grauDocente, areaDoc:areaDoc, ficha:ficha, forma:forma, pedag:pedag, invest:invest,orgGest:orgGest})
+																					}
+																				}catch{
+																					res.render("docenteInvalido");
+																				}
 																			}
 																		}
 																	})

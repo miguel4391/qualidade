@@ -13,6 +13,48 @@ function formatDateInput(d) {
         pointer-events: none;
         background-color: #e9ecef;
     }
+
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    .areas-funcionais-display {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 6px;
+    }
+
+    .area-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+    }
+
+    .area-badge.visivel {
+        background-color: #e6f4ea;
+        color: #1e7e34;
+        border: 1px solid #b7dfc0;
+    }
+
+    .area-badge.nao-visivel {
+        background-color: #f1f1f1;
+        color: #777;
+        border: 1px dashed #ccc;
+    }
+
+    .area-badge small {
+        font-size: 0.75rem;
+        font-style: italic;
+    }
 </style>
 <div class="container mt-5">
   <div class="row">
@@ -74,15 +116,31 @@ function formatDateInput(d) {
 
                 <div class="col-md-12 mb-3">
                     <label for="cbDepartamento" class="form-label">Áreas Funcionais</label>
-                    <select class="form-select no-click" id="cbDepartamento" name="cbDepartamento" multiple size="6" aria-label="Selecionar Área(s) Funcional(is)">
-                        <% areasFunc.forEach(a => { %>
-                            <option value="<%= a.idtbOpcaoAreasFunc %>"
-                                <%= (colab && colab.idsAreaFunc && colab.idsAreaFunc.some(id => id == a.idtbOpcaoAreasFunc)) ? 'selected' : '' %>>
+                    <!-- Select original: mantém-se para submissão do form, mas fica oculto visualmente -->
+                    <select class="form-select no-click visually-hidden" id="cbDepartamento" name="cbDepartamento" multiple size="6" aria-label="Selecionar Área(s) Funcional(is)">
+                        <% areasFunc.forEach(a => { 
+                            const afeto = colab && colab.idsAreaFunc && colab.idsAreaFunc.some(id => id == a.idtbOpcaoAreasFunc);
+                        %>
+                            <option value="<%= a.idtbOpcaoAreasFunc %>" <%= afeto ? 'selected' : '' %>>
                                 <%= a.sigla %> — <%= a.nome %>
                             </option>
                         <% }) %>
                     </select>
-                    <div class="form-text">Pode selecionar mais do que uma opção (Ctrl/Cmd + clique - MAC) (Ctrl/Alt + clique - Windows ou Linux).</div>
+
+                    <!-- Representação visual legível, só para leitura -->
+                    <div class="areas-funcionais-display">
+                        <% areasFunc.forEach(a => {
+                            const afeto = colab && colab.idsAreaFunc && colab.idsAreaFunc.some(id => id == a.idtbOpcaoAreasFunc);
+                            const visivelPortal = colab && colab.idsAreaFuncVisiveis && colab.idsAreaFuncVisiveis.some(id => id == a.idtbOpcaoAreasFunc);
+                            if (afeto) {
+                        %>
+                            <span class="area-badge <%= visivelPortal ? 'visivel' : 'nao-visivel' %>">
+                                <%= a.sigla %> — <%= a.nome %>
+
+                            </span>
+                        <% } }) %>
+                    </div>
+                    
                 </div>
             </div>
             <div class="row">
